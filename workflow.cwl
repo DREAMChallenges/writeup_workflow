@@ -107,7 +107,7 @@ steps:
     out: [finished]
  
    archive:
-     run: archive_writeup.cwl
+     run: archive.cwl
      in:
        - id: submissionid
          source: "#submissionId"
