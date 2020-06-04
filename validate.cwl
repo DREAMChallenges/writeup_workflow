@@ -28,7 +28,7 @@ inputs:
 arguments:
   - valueFrom: $(inputs.synapse_config.path)
     prefix: -c
-  - valueFrom: validateproject
+  - valueFrom: validate_project
   - valueFrom: $(inputs.submissionid)
   - valueFrom: $(inputs.challengewiki)
   - valueFrom: $(inputs.public)

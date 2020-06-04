@@ -22,7 +22,7 @@ inputs:
 arguments:
   - valueFrom: $(inputs.synapse_config.path)
     prefix: -c
-  - valueFrom: archiveproject
+  - valueFrom: archive_project
   - valueFrom: $(inputs.submissionid)
   - valueFrom: $(inputs.admin)
     prefix: --admin

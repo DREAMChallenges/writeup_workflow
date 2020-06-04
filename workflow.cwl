@@ -26,26 +26,13 @@ inputs:
     type: string
   - id: synapseConfig
     type: File
+  - id: admin
+    valueFrom: "jane.doe"  # TODO: enter admin username (they will become the archive owner)
 
 # there are no output at the workflow engine level.  Everything is uploaded to Synapse
 outputs: []
 
 steps:
-  download_submission:
-    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v2.0/get_submission.cwl
-    in:
-      - id: submissionid
-        source: "#submissionId"
-      - id: synapse_config
-        source: "#synapseConfig"
-    out:
-      - id: filepath
-      - id: docker_repository
-      - id: docker_digest
-      - id: entity_id
-      - id: entity_type
-      - id: results
-
   validation:
     run: validate.cwl
     in:
@@ -59,7 +46,7 @@ steps:
     #   - id: public
     #     default: true
     #   - id: admin
-    #     valueFrom: "jane.doe1"  # enter admin username
+    #     source: "#admin"
     out:
       - id: results
       - id: status
@@ -81,7 +68,7 @@ steps:
     out: [finished]
 
   annotate_validation_with_output:
-    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v2.0/annotate_submission.cwl
+    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v2.2/annotate_submission.cwl
     in:
       - id: submissionid
         source: "#submissionId"
@@ -96,7 +83,7 @@ steps:
     out: [finished]
 
   check_status:
-    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v2.0/check_status.cwl
+    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v2.2/check_status.cwl
     in:
       - id: status
         source: "#validation/status"
@@ -106,11 +93,10 @@ steps:
         source: "#validation_email/finished"
     out: [finished]
  
-   archive:
-     run: arhive_writeup.cwl
-     in:
-       - id: submissionid
+  archive:
+    run: arhive_writeup.cwl
+    in:
+      - id: submissionid
          source: "#submissionId"
-       - id: admin
-         valueFrom: "jane.doe"  # TODO: enter admin username (they will become the archive owner)
-      out: [finished]
+      - id: admin
+        source: "#admin"
