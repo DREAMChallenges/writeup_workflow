@@ -8,7 +8,7 @@ baseCommand: challengeutils
 
 hints:
   DockerRequirement:
-    dockerPull: sagebionetworks/challengeutils:develop
+    dockerPull: sagebionetworks/challengeutils:v2.2.0
 
 requirements:
   - class: InlineJavascriptRequirement
@@ -18,13 +18,20 @@ inputs:
     type: int
   - id: admin
     type: string
+  - id: synapse_config
+    type: File
 
 arguments:
   - valueFrom: $(inputs.synapse_config.path)
     prefix: -c
-  - valueFrom: archive_project
+  - valueFrom: archive-project
   - valueFrom: $(inputs.submissionid)
   - valueFrom: $(inputs.admin)
-    prefix: --admin
+  - valueFrom: results.json
+    prefix: --output
 
-outputs: [finished]
+outputs:
+  - id: results
+    type: File
+    outputBinding:
+      glob: results.json

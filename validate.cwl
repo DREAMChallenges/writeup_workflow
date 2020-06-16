@@ -8,7 +8,7 @@ baseCommand: challengeutils
 
 hints:
   DockerRequirement:
-    dockerPull: sagebionetworks/challengeutils:develop
+    dockerPull: sagebionetworks/challengeutils:v2.2.0
 
 requirements:
   - class: InlineJavascriptRequirement
@@ -28,7 +28,7 @@ inputs:
 arguments:
   - valueFrom: $(inputs.synapse_config.path)
     prefix: -c
-  - valueFrom: validate_project
+  - valueFrom: validate-project
   - valueFrom: $(inputs.submissionid)
   - valueFrom: $(inputs.challengewiki)
   - valueFrom: $(inputs.public)
@@ -52,7 +52,7 @@ outputs:
       outputEval: $(JSON.parse(self[0].contents)['writeup_status'])
 
   - id: invalid_reasons
-    type: string
+    type: string[]
     outputBinding:
       glob: results.json
       loadContents: true

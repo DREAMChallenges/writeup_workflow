@@ -33,7 +33,7 @@ inputs:
 outputs: []
 
 steps:
-  validation:
+  validate:
     run: validate.cwl
     in:
       - id: synapse_config
@@ -53,27 +53,27 @@ steps:
       - id: invalid_reasons
   
   validation_email:
-    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v2.2/validate_email.cwl
+    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v2.6/validate_email.cwl
     in:
       - id: submissionid
         source: "#submissionId"
       - id: synapse_config
         source: "#synapseConfig"
       - id: status
-        source: "#validation/status"
+        source: "#validate/status"
       - id: invalid_reasons
-        source: "#validation/invalid_reasons"
+        source: "#validate/invalid_reasons"
       - id: errors_only
         default: true
     out: [finished]
 
   annotate_validation_with_output:
-    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v2.2/annotate_submission.cwl
+    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v2.6/annotate_submission.cwl
     in:
       - id: submissionid
         source: "#submissionId"
       - id: annotation_values
-        source: "#validation/results"
+        source: "#validate/results"
       - id: to_public
         default: true
       - id: force_change_annotation_acl
@@ -83,10 +83,10 @@ steps:
     out: [finished]
 
   check_status:
-    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v2.2/check_status.cwl
+    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v2.6/check_status.cwl
     in:
       - id: status
-        source: "#validation/status"
+        source: "#validate/status"
       - id: previous_annotation_finished
         source: "#annotate_validation_with_output/finished"
       - id: previous_email_finished
@@ -100,3 +100,20 @@ steps:
          source: "#submissionId"
       - id: admin
         source: "#admin"
+    out:
+      - id: results
+
+  annotate_archive_with_output:
+    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v2.6/annotate_submission.cwl
+    in:
+      - id: submissionid
+        source: "#submissionId"
+      - id: annotation_values
+        source: "#archive/results"
+      - id: to_public
+        default: true
+      - id: force_change_annotation_acl
+        default: true
+      - id: synapse_config
+        source: "#synapseConfig"
+    out: [finished]
