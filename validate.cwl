@@ -52,8 +52,8 @@ outputs:
       outputEval: $(JSON.parse(self[0].contents)['writeup_status'])
 
   - id: invalid_reasons
-    type: string[]
+    type: string
     outputBinding:
       glob: results.json
       loadContents: true
-      outputEval: $(JSON.parse(self[0].contents)['errors_found'])
+      outputEval: $(JSON.parse(self[0].contents)['errors_found'].join("\n"))
