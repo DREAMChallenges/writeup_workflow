@@ -64,8 +64,9 @@ steps:
         source: "#validate/status"
       - id: invalid_reasons
         source: "#validate/invalid_reasons"
-      - id: errors_only
-        default: true
+      # UNCOMMENT IF EMAIL SHOULD ONLY BE SENT FOR ERRORS
+      # - id: errors_only
+      #   default: true
     out: [finished]
 
   annotate_validation_with_output:
