@@ -96,8 +96,10 @@ steps:
   archive:
     run: archive.cwl
     in:
+      - id: synapse_config
+        source: "#synapseConfig"
       - id: submissionid
-         source: "#submissionId"
+        source: "#submissionId"
       - id: admin
         source: "#admin"
     out:
