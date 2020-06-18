@@ -54,7 +54,7 @@ steps:
       - id: invalid_reasons
   
   validation_email:
-    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v2.6/validate_email.cwl
+    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v2.7/validate_email.cwl
     in:
       - id: submissionid
         source: "#submissionId"
@@ -70,7 +70,7 @@ steps:
     out: [finished]
 
   annotate_validation_with_output:
-    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v2.6/annotate_submission.cwl
+    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v2.7/annotate_submission.cwl
     in:
       - id: submissionid
         source: "#submissionId"
@@ -85,7 +85,7 @@ steps:
     out: [finished]
 
   check_status:
-    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v2.6/check_status.cwl
+    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v2.7/check_status.cwl
     in:
       - id: status
         source: "#validate/status"
@@ -110,7 +110,7 @@ steps:
       - id: results
 
   annotate_archive_with_output:
-    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v2.6/annotate_submission.cwl
+    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v2.7/annotate_submission.cwl
     in:
       - id: submissionid
         source: "#submissionId"
