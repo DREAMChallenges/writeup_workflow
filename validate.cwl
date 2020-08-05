@@ -8,7 +8,7 @@ baseCommand: challengeutils
 
 hints:
   DockerRequirement:
-    dockerPull: sagebionetworks/challengeutils:v2.2.0
+    dockerPull: sagebionetworks/challengeutils:v3.0
 
 requirements:
   - class: InlineJavascriptRequirement
@@ -49,11 +49,11 @@ outputs:
     outputBinding:
       glob: results.json
       loadContents: true
-      outputEval: $(JSON.parse(self[0].contents)['writeup_status'])
+      outputEval: $(JSON.parse(self[0].contents)['submission_status'])
 
   - id: invalid_reasons
     type: string
     outputBinding:
       glob: results.json
       loadContents: true
-      outputEval: $(JSON.parse(self[0].contents)['errors_found'].join("\n"))
+      outputEval: $(JSON.parse(self[0].contents)['submission_errors'].join("\n"))
