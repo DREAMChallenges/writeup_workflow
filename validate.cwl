@@ -56,4 +56,4 @@ outputs:
     outputBinding:
       glob: results.json
       loadContents: true
-      outputEval: $(JSON.parse(self[0].contents)['submission_errors'].join("\n"))
+      outputEval: $(JSON.parse(self[0].contents)['submission_errors'])
