@@ -1,16 +1,22 @@
 #!/usr/bin/env cwl-runner
-#
-# Workflow for validating and archiving a Project submission
-#
-# Inputs:
-#   submissionId: ID of the Synapse submission to process
-#   adminUploadSynId: ID of a folder accessible only to the submission queue administrator
-#   submitterUploadSynId: ID of a folder accessible to the submitter
-#   workflowSynapseId:  ID of the Synapse entity containing a reference to the workflow file(s)
-#   synapseConfig: ~/.synapseConfig file that has your Synapse credentials
-#
+
+# INPUTS:
+#   submission_id: Submission ID
+#   synapse_config: filepath to .synapseConfig file
+#   admin_folder_id: Synapse Folder ID accessible by an admin
+#   submitter_folder_id: Synapse Folder ID accessible by the submitter
+#   workflow_id: Synapse File ID that links to the workflow archive
+
 cwlVersion: v1.0
 class: Workflow
+
+label: workflow to accept challenge writeups
+doc: >
+  This workflow will validate a participant's writeup, checking for:
+    - Submission is a Synapse project
+    - Submission is not the challenge site (which is a Synapse project)
+    - Submission is accessible to the admin team
+  Archive (create a project copy) if the submission is valid.
 
 requirements:
   - class: StepInputExpressionRequirement
@@ -18,20 +24,19 @@ requirements:
 inputs:
   - id: submissionId
     type: int
+  - id: synapseConfig
+    type: File
   - id: adminUploadSynId
     type: string
   - id: submitterUploadSynId
     type: string
   - id: workflowSynapseId
     type: string
-  - id: synapseConfig
-    type: File
   - id: admin
     type: string
     default: "jane.doe"  # TODO: enter admin username (they will become the archive owner)
 
-# there are no output at the workflow engine level.  Everything is uploaded to Synapse
-outputs: []
+outputs: {}
 
 steps:
   validate:
